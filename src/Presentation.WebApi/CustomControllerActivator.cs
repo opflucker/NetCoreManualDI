@@ -9,7 +9,6 @@ namespace NetCoreManualDI.WebApi
     public class CustomControllerActivator : IControllerActivator
     {
         private readonly ILoggerFactory loggerFactory;
-        private readonly Func<SchoolContext> schoolContextFactory;
         private readonly Func<ISchoolService> schoolServiceFactory;
 
         public CustomControllerActivator(IServiceProvider serviceProvider)
@@ -18,8 +17,7 @@ namespace NetCoreManualDI.WebApi
 
             var configuration = serviceProvider.GetRequiredService<IConfiguration>();
             var connectionString = configuration.GetConnectionString("DefaultConnection");
-            schoolContextFactory = () => new SchoolContext(connectionString, true);
-
+            var schoolContextFactory = () => new SchoolContext(connectionString, true);
             schoolServiceFactory = () => ApplicationDomainFactories.ForSchoolService(schoolContextFactory);
         }
 
