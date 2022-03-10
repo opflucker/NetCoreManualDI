@@ -1,5 +1,5 @@
 # .NET Core with Factory Based Dependency Injection
-Example .NET Core applications (console and webapi), with onion architecture and manual dependency injection (DI). Instead of Pure DI technique (that suffers of poor decoupling), this solution uses Partial Function Applications ([PFA](https://en.wikipedia.org/wiki/Partial_application#:~:text=7%20External%20links-,Motivation,y)%20%3D%201%2Fy.)) as factories when resolving dependencies. This ensure the same level of decoupling compared to container based DI.
+Example .NET Core applications (console and webapi), with onion architecture and manual dependency injection (DI). Instead of Pure DI technique (that suffers of poor decoupling), this solution uses Partial Function Applications ([PFA](https://en.wikipedia.org/wiki/Partial_application)) as factories when resolving dependencies. This ensure the same level of decoupling compared to container based DI.
 
 ## How it works
 The key element is what we can name *DI factory*. In this example, some DI factories are defined in class [ApplicationDomainFactories](src/ApplicationDomain/ApplicationDomainFactories.cs):
