@@ -1,9 +1,8 @@
 # .NET Core with Factory Based Dependency Injection
-Example .NET Core applications (console and webapi), with onion architecture and manual dependency injection (DI). Instead of Pure DI technique (that suffers of poor decoupling), this solution uses lambda expressions as factories when resolving dependencies. This ensure the same level of decoupling compared to container based DI. 
+Example .NET Core applications (console and webapi), with onion architecture and manual dependency injection (DI). Instead of Pure DI technique (that suffers of poor decoupling), this solution uses Partial Function Applications ([PFA](https://en.wikipedia.org/wiki/Partial_application#:~:text=7%20External%20links-,Motivation,y)%20%3D%201%2Fy.)) as factories when resolving dependencies. This ensure the same level of decoupling compared to container based DI.
 
 ## How it works
-
-The key element in this experiment is class [ApplicationDomainFactories](src/ApplicationDomain/ApplicationDomainFactories.cs):
+The key element is what we can name *DI factory*. In this example, some DI factories are defined in class [ApplicationDomainFactories](src/ApplicationDomain/ApplicationDomainFactories.cs):
 
 ```C#
 public static class ApplicationDomainFactories
@@ -19,9 +18,11 @@ public static class ApplicationDomainFactories
 }
 ```
 
+This class exposes three DI factories: `ForCoursesService`, `ForStudentsService` and `ForSchoolService`. Each one knows how to create an internal implemented interface. When any dependency can not be resolved at this level, a DI factory takes the form of a PFA, this is, a lambda expression that reduces the original function arity completing known parameters and exposing missed ones. This technique is composable, so a DI factory can be defined using others DI factories, as in `ForSchoolService`.
+ 
 [ApplicationDomain](src/ApplicationDomain) project implements three interfaces. Implementations of [ICoursesService](src/ApplicationDomain/ICoursesService.cs) and [IStudentsService](src/ApplicationDomain/IStudentsService.cs) depends on [ISchoolContext](src/ApplicationDomain.Repositories/ISchoolContext.cs). This resource is created externally, so these implementations are not in charge of releasing it.
 
-ApplicationDomain project also implements [ISchoolService](src/ApplicationDomain/ISchoolService.cs) in class [SchoolService](src/ApplicationDomain/SchoolService.cs). SchoolService depends on ISchoolContext and also needs to control its lifecycle, so it receives a factory. Additionally, SchoolService depends on ICoursesService and IStudentsService and must ensure all be created using the same ISchoolContext instance, so it receives factories for both too:
+`ApplicationDomain` project also implements [ISchoolService](src/ApplicationDomain/ISchoolService.cs) in class [SchoolService](src/ApplicationDomain/SchoolService.cs). `SchoolService` depends on ISchoolContext and also needs to control its lifecycle, so it receives a DI factory. Additionally, `SchoolService` depends on `ICoursesService` and `IStudentsService` and must ensure all be created using the same `ISchoolContext` instance, so it receives factories for both too:
 
 ```C#
 public SchoolService(
@@ -35,7 +36,7 @@ public SchoolService(
 }
 ```
 
-SchoolService becomes owner of three resources (because it creates them) but only one is disposable (implements IDisposable), ISchoolContext, so it has to explicitly dispose it:
+`SchoolService` becomes owner of three resources (because it creates them) but only one is disposable (implements `IDisposable`), `ISchoolContext`, so it has to explicitly dispose it:
 
 ```C#
 public void Dispose()
@@ -48,8 +49,7 @@ public void Dispose()
 In summary, if a class use a dependency, it receives an instance injected. If it also needs to control the dependency lifecycle, it receives a factory.
 
 ## In ASP.NET Core
-
-Use DI factories in console is straighforward, as in project NetCoreManualDI.Console in file [Program.cs](src/Presentation.Console/Program.cs):
+Use DI factories in console is straighforward, as in project [NetCoreManualDI.Console](src/Presentation.Console) in file [Program.cs](src/Presentation.Console/Program.cs):
 
 ```C#
 var schoolService = ApplicationDomainFactories.ForSchoolService(() => new SchoolContext(connectionString, true));
