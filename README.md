@@ -1,5 +1,5 @@
 # .NET Core with Factory Based Dependency Injection
-Example .NET Core applications (console and webapi), with onion architecture and manual dependency injection (DI). Instead of Pure DI technique (that suffers of poor decoupling), this solution uses Partial Function Applications ([PFA](https://en.wikipedia.org/wiki/Partial_application)) as factories when resolving dependencies. This ensure the same level of decoupling compared to container based DI.
+Example .NET Core applications (console and webapi), with onion architecture and manual dependency injection (DI). Instead of Pure DI technique (that suffers of poor decoupling), this solution uses factories when resolving dependencies. This ensure the same level of decoupling compared to container based DI.
 
 ## How it works
 The key element is the injection of dependency factories (**d-factories**) when we want to control their lifecycles. In this example, some d-factories are defined in class [ApplicationDomainFactories](src/ApplicationDomain/ApplicationDomainFactories.cs):
@@ -18,7 +18,7 @@ public static class ApplicationDomainFactories
 }
 ```
 
-This class defines three d-factories: `ForCoursesService`, `ForStudentsService` and `ForSchoolService`. Each one knows how to create an internal implemented interface. When any dependency can not be resolved at this level, a d-factory takes the form of a PFA, this is, a lambda expression that reduces the original function arity completing known parameters and exposing unknown ones. This technique is composable, so a d-factory can be defined using others d-factories, as in `ForSchoolService`.
+This class defines three d-factories: `ForCoursesService`, `ForStudentsService` and `ForSchoolService`. Each one knows how to create an internal implemented interface. When any dependency can not be resolved at this level, a d-factory takes the form of a Partial Function Application ([PFA](https://en.wikipedia.org/wiki/Partial_application)), this is, a lambda expression that reduces the original function arity completing known parameters and exposing unknown ones. This technique is composable, so a d-factory can be defined using others d-factories, as in `ForSchoolService`.
  
 [ApplicationDomain](src/ApplicationDomain) project implements three interfaces. Implementations of [ICoursesService](src/ApplicationDomain/ICoursesService.cs) and [IStudentsService](src/ApplicationDomain/IStudentsService.cs) depends on [ISchoolContext](src/ApplicationDomain.Repositories/ISchoolContext.cs). This resource is created externally, so these implementations are not in charge of releasing it.
 
