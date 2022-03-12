@@ -46,7 +46,7 @@ public void Dispose()
 }
 ```
 
-In summary, if a class use a dependency, it receives an instance injected. If it also needs to control the dependency lifecycle, it receives a factory.
+In summary, if a class use a dependency, it receives an instance injected. If it also needs to control the dependency lifecycle, it receives a factory instead. If it need to share a resource with a dependency, it receives a PFA d-factory and inject the resource when creating the dependency.
 
 ## In ASP.NET Core
 Use DI factories in console is straighforward, as in project [NetCoreManualDI.Console](src/Presentation.Console) in file [Program.cs](src/Presentation.Console/Program.cs):
