@@ -13,7 +13,7 @@ namespace NetCoreManualDI.Persistence
         public SchoolContext(string connectionString, bool useConsoleLogger)
         {
             context = new SchoolDbContext(connectionString, useConsoleLogger);
-            Students = new StudentsRepository(context.Students);
+            Students = new StudentsRepository(context);
             Courses = new CoursesRepository(context.Courses);
         }
 

@@ -12,7 +12,7 @@ namespace NetCoreManualDI.ApplicationDomain
             this.schoolContext = schoolContext;
         }
 
-        public Task<Course?> GetByNameAsync(string name)
+        public Task<Course?> GetByNameAsync(CourseName name)
         {
             return schoolContext.Courses.GetByNameAsync(name);
         }

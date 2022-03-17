@@ -1,17 +1,18 @@
-﻿namespace NetCoreManualDI.BusinessDomain.Core
-{
-    public class Course
-    {
-        public Guid Id { get; }
-        public string Name { get; set; }
+﻿using NetCoreManualDI.BusinessDomain.Commons;
 
-        public Course(string name)
+namespace NetCoreManualDI.BusinessDomain.Core
+{
+    public class Course : RootAggregate
+    {
+        public CourseName Name { get; set; }
+
+        public Course(CourseName name)
         {
             Name = name;
         }
 
-        #pragma warning disable CS8618
+#pragma warning disable CS8618
         private Course() { }
-        #pragma warning restore CS8618
+#pragma warning restore CS8618
     }
 }

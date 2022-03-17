@@ -1,8 +1,9 @@
-﻿namespace NetCoreManualDI.BusinessDomain.Core
+﻿using NetCoreManualDI.BusinessDomain.Commons;
+
+namespace NetCoreManualDI.BusinessDomain.Core
 {
-    public class Enrollment
+    public class Enrollment : Entity
     {
-        public Guid Id { get; }
         public Student Student { get; }
         public Course Course { get; }
 

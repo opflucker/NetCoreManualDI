@@ -1,15 +1,16 @@
-﻿namespace NetCoreManualDI.BusinessDomain.Core
+﻿using NetCoreManualDI.BusinessDomain.Commons;
+
+namespace NetCoreManualDI.BusinessDomain.Core
 {
-    public sealed class Student
+    public sealed class Student : RootAggregate
     {
-        public Guid Id { get; }
-        public string Name { get; }
-        public Course FavoriteCourse { get; }
+        public StudentName Name { get; }
+        public Course FavoriteCourse { get; private set; }
 
         private readonly List<Enrollment> _enrollments;
         public IReadOnlyList<Enrollment> Enrollments => _enrollments;
 
-        public Student(string name, Course favoriteCourse)
+        public Student(StudentName name, Course favoriteCourse)
         {
             Name = name;
             FavoriteCourse = favoriteCourse;
@@ -21,8 +22,13 @@
             _enrollments.Add(new Enrollment(this, course));
         }
 
-        #pragma warning disable CS8618
+        public void ChangeFavoriteCourse(Course newFavoriteCourse)
+        {
+            FavoriteCourse = newFavoriteCourse;
+        }
+
+#pragma warning disable CS8618
         private Student() { }
-        #pragma warning restore CS8618
+#pragma warning restore CS8618
     }
 }

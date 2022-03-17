@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using NetCoreManualDI.ApplicationDomain;
+using NetCoreManualDI.BusinessDomain.Core;
 
 namespace NetCoreManualDI.WebApi.Controllers
 {
@@ -25,7 +26,7 @@ namespace NetCoreManualDI.WebApi.Controllers
 
             using (var someService = schoolServiceFactory())
             {
-                await someService.EnrollStudent(studentName, courseName);
+                await someService.EnrollStudent(studentName.ToStudentName(), courseName.ToCourseName());
             }
 
             return Ok();

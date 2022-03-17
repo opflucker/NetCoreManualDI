@@ -18,7 +18,7 @@ namespace NetCoreManualDI.Persistence
             return Courses.FindAsync(id);
         }
 
-        public Task<Course?> GetByNameAsync(string name)
+        public Task<Course?> GetByNameAsync(CourseName name)
         {
             return Courses.SingleOrDefaultAsync(c => c.Name == name);
         }

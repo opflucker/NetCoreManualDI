@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using NetCoreManualDI.ApplicationDomain;
+using NetCoreManualDI.BusinessDomain.Core;
 using NetCoreManualDI.Persistence;
 
 var connectionString = new ConfigurationBuilder()
@@ -8,6 +9,36 @@ var connectionString = new ConfigurationBuilder()
     .Build()
     .GetConnectionString("DefaultConnection");
 
-var schoolService = ApplicationDomainFactories.ForSchoolService(() => new SchoolContext(connectionString, true));
+// Use case: Initialize database
+//var schoolService = ApplicationDomainFactories.ForSchoolService(() => new SchoolContext(connectionString, true));
+//await schoolService.Initialize();
 
-await schoolService.EnrollStudent("Otto", "Math");
+// Use case: enroll student
+//var schoolService = ApplicationDomainFactories.ForSchoolService(() => new SchoolContext(connectionString, true));
+//await schoolService.EnrollStudent("Otto".ToStudentName(), "Math");
+//await schoolService.EnrollStudent("Otto".ToStudentName(), "Physics");
+//await schoolService.EnrollStudent("Otto".ToStudentName(), "History");
+
+// Use case: Read student
+using var schoolContext = new SchoolContext(connectionString, true);
+var student = await schoolContext.Students.GetByNameAsync("Otto".ToStudentName());
+Console.WriteLine(student);
+
+// Use case: use an untracked object to set a relation
+//Course? mathCourse;
+//using (var schoolContext = new SchoolContext(connectionString, true))
+//{
+//    mathCourse = await schoolContext.Courses.GetByNameAsync("Math");
+//}
+//if (mathCourse != null)
+//{
+//    using (var schoolContext = new SchoolContext(connectionString, true))
+//    {
+//        var student = await schoolContext.Students.GetByNameAsync("Otto".ToStudentName());
+//        if (student != null)
+//        {
+//            student.ChangeFavoriteCourse(mathCourse);
+//            await schoolContext.SaveChangesAsync();
+//        }
+//    }
+//}

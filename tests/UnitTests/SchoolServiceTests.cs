@@ -20,10 +20,10 @@ namespace NetCoreManualDI.UnitTests
         [Fact]
         public void When_Enroll_Then_Student_Success()
         {
-            var course1 = new Course("Math");
+            var course1 = new Course("Math".ToCourseName());
             schoolContext.Courses.Register(course1);
 
-            Student student1 = new Student("Jose", course1);
+            Student student1 = new Student("Jose".ToStudentName(), course1);
             schoolContext.Students.Register(student1);
 
             schoolService.EnrollStudent(student1.Name, course1.Name);

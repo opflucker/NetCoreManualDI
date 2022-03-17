@@ -4,6 +4,6 @@ namespace NetCoreManualDI.ApplicationDomain
 {
     public interface IStudentsService
     {
-        Task<Student?> GetByNameAsync(string name);
+        Task<Student?> GetByNameAsync(StudentName name);
     }
 }

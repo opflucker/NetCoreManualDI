@@ -38,7 +38,7 @@ namespace NetCoreManualDI.Persistence.Design
             modelBuilder.Entity<Student>(b => 
             {
                 b.HasKey(e => e.Id);
-                b.Property(e => e.Name);
+                b.Property(e => e.Name).HasConversion(e => e.Name, e => e.ToStudentName());
                 b.HasOne(p => p.FavoriteCourse).WithMany().OnDelete(DeleteBehavior.ClientSetNull);
                 b.HasMany(p => p.Enrollments).WithOne(p => p.Student);
             });
@@ -46,6 +46,7 @@ namespace NetCoreManualDI.Persistence.Design
             modelBuilder.Entity<Course>(b =>
             {
                 b.HasKey(e => e.Id);
+                b.Property(e => e.Name).HasConversion(e => e.Name, e => e.ToCourseName());
             });
 
             modelBuilder.Entity<Enrollment>(b => 

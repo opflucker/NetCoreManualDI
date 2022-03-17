@@ -27,16 +27,18 @@ namespace NetCoreManualDI.ApplicationDomain
 
         public async Task Initialize()
         {
-            var course = new Course("Math");
-            schoolContext.Courses.Register(course);
+            var courseNames = new[] { "Math", "Physics", "History" };
+            var courses = courseNames.Select(name => new Course(name.ToCourseName())).ToArray();
+            foreach (var course in courses)
+                schoolContext.Courses.Register(course);
 
-            var student = new Student("Otto", course);
+            var student = new Student("Otto".ToStudentName(), courses.First());
             schoolContext.Students.Register(student);
 
             await schoolContext.SaveChangesAsync();
         }
 
-        public async Task EnrollStudent(string studentName, string courseName)
+        public async Task EnrollStudent(StudentName studentName, CourseName courseName)
         {
             var course = await coursesService.GetByNameAsync(courseName);
             var student = await studentsService.GetByNameAsync(studentName);

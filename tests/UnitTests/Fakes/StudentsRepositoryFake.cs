@@ -18,7 +18,7 @@ namespace NetCoreManualDI.UnitTests.Fakes
             return Task.FromResult<Student?>(null);
         }
 
-        public Task<Student?> GetByNameAsync(string name)
+        public Task<Student?> GetByNameAsync(StudentName name)
         {
             return Task.FromResult(students.Values.FirstOrDefault(c => c.Name == name));
         }
