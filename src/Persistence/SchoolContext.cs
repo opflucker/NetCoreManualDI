@@ -1,5 +1,6 @@
 ﻿using NetCoreManualDI.ApplicationDomain.Repositories;
 using NetCoreManualDI.BusinessDomain.Commons;
+using NetCoreManualDI.Persistence.Design;
 
 namespace NetCoreManualDI.Persistence
 {

@@ -2,6 +2,7 @@
 using NetCoreManualDI.ApplicationDomain.Repositories;
 using NetCoreManualDI.BusinessDomain.Core;
 using NetCoreManualDI.BusinessDomain.Core.Students;
+using NetCoreManualDI.Persistence.Design;
 
 namespace NetCoreManualDI.Persistence
 {

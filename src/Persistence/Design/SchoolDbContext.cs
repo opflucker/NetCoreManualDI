@@ -1,10 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using NetCoreManualDI.BusinessDomain.Core;
 using NetCoreManualDI.BusinessDomain.Core.Courses;
 using NetCoreManualDI.BusinessDomain.Core.Students;
 
-namespace NetCoreManualDI.Persistence
+namespace NetCoreManualDI.Persistence.Design
 {
     public sealed class SchoolDbContext : DbContext
     {
@@ -37,21 +36,21 @@ namespace NetCoreManualDI.Persistence
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Student>(b => 
+            modelBuilder.Entity<Student>(b =>
             {
                 b.HasKey(e => e.Id);
                 b.Property(e => e.Name).HasConversion(e => e.Name, e => e.ToStudentName());
                 b.HasOne(p => p.FavoriteCourse).WithMany().OnDelete(DeleteBehavior.ClientSetNull);
                 b.HasMany(p => p.Enrollments).WithOne(p => p.Student);
             });
-                
+
             modelBuilder.Entity<Course>(b =>
             {
                 b.HasKey(e => e.Id);
                 b.Property(e => e.Name).HasConversion(e => e.Name, e => e.ToCourseName());
             });
 
-            modelBuilder.Entity<Enrollment>(b => 
+            modelBuilder.Entity<Enrollment>(b =>
             {
                 b.HasKey(e => e.Id);
                 b.HasOne(p => p.Student).WithMany(p => p.Enrollments);

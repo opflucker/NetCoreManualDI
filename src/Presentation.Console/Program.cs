@@ -10,36 +10,21 @@ var connectionString = new ConfigurationBuilder()
     .Build()
     .GetConnectionString("DefaultConnection");
 
-// Use case: Initialize database
-var schoolService = Factories.ForSchoolService(() => new SchoolContext(connectionString, true));
-await schoolService.Initialize();
+var schoolContextFactory = () => new SchoolContext(connectionString, true);
 
-// Use case: enroll student
-//var schoolService = ApplicationDomainFactories.ForSchoolService(() => new SchoolContext(connectionString, true));
-await schoolService.EnrollStudent("Otto".ToStudentName(), "Math".ToCourseName());
-//await schoolService.EnrollStudent("Otto".ToStudentName(), "Physics".ToCourseName());
-//await schoolService.EnrollStudent("Otto".ToStudentName(), "History".ToCourseName());
+using (var schoolService = Factories.ForSchoolService(schoolContextFactory))
+{
+    await schoolService.Initialize();
+    await schoolService.EnrollStudent("Otto".ToStudentName(), "Physics".ToCourseName());
+}
 
-// Use case: Read student
-//using var schoolContext = new SchoolContext(connectionString, true);
-//var student = await schoolContext.Students.GetByNameAsync("Otto".ToStudentName());
-//Console.WriteLine(student);
-
-// Use case: use an untracked object to set a relation
-//Course? mathCourse;
-//using (var schoolContext = new SchoolContext(connectionString, true))
-//{
-//    mathCourse = await schoolContext.Courses.GetByNameAsync("Math");
-//}
-//if (mathCourse != null)
-//{
-//    using (var schoolContext = new SchoolContext(connectionString, true))
-//    {
-//        var student = await schoolContext.Students.GetByNameAsync("Otto".ToStudentName());
-//        if (student != null)
-//        {
-//            student.ChangeFavoriteCourse(mathCourse);
-//            await schoolContext.SaveChangesAsync();
-//        }
-//    }
-//}
+using (var schoolContext = schoolContextFactory())
+{
+    var student = await schoolContext.Students.GetByNameAsync("Otto".ToStudentName());
+    if (student != null)
+    {
+        Console.WriteLine($"{student.Name}, with enrollments:");
+        foreach(var e in student.Enrollments)
+            Console.WriteLine(e.Course.Name);
+    }
+}
