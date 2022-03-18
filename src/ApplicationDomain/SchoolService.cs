@@ -5,23 +5,23 @@ namespace NetCoreManualDI.ApplicationDomain
 {
     internal sealed class SchoolService : ISchoolService
     {
-        private readonly ISchoolContext schoolContext;
+        private readonly IApplicationContext applicationUnitOfWork;
         private readonly ICoursesService coursesService;
         private readonly IStudentsService studentsService;
 
         public SchoolService(
-            Func<ISchoolContext> schoolContextFactory,
+            Func<IApplicationContext> applicationUnitOfWorkFactory,
             Func<ISchoolContext, ICoursesService> coursesServiceFactory,
             Func<ISchoolContext, IStudentsService> studentsServiceFactory)
         {
-            schoolContext = schoolContextFactory();
-            coursesService = coursesServiceFactory(schoolContext);
-            studentsService = studentsServiceFactory(schoolContext);
+            applicationUnitOfWork = applicationUnitOfWorkFactory();
+            coursesService = coursesServiceFactory(applicationUnitOfWork.School);
+            studentsService = studentsServiceFactory(applicationUnitOfWork.School);
         }
 
         public void Dispose()
         {
-            schoolContext.Dispose();
+            applicationUnitOfWork.Dispose();
             GC.SuppressFinalize(this);
         }
 
@@ -30,12 +30,12 @@ namespace NetCoreManualDI.ApplicationDomain
             var courseNames = new[] { "Math", "Physics", "History" };
             var courses = courseNames.Select(name => new Course(name.ToCourseName())).ToArray();
             foreach (var course in courses)
-                schoolContext.Courses.Register(course);
+                applicationUnitOfWork.School.Courses.Register(course);
 
             var student = new Student("Otto".ToStudentName(), courses.First());
-            schoolContext.Students.Register(student);
+            applicationUnitOfWork.School.Students.Register(student);
 
-            await schoolContext.SaveChangesAsync();
+            await applicationUnitOfWork.SaveChangesAsync();
         }
 
         public async Task EnrollStudent(StudentName studentName, CourseName courseName)
@@ -47,7 +47,7 @@ namespace NetCoreManualDI.ApplicationDomain
                 student.EnrollIn(course);
             }
 
-            await schoolContext.SaveChangesAsync();
+            await applicationUnitOfWork.SaveChangesAsync();
         }
     }
 }

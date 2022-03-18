@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using NetCoreManualDI.BusinessDomain.Core;
 
-namespace NetCoreManualDI.Persistence.Design
+namespace NetCoreManualDI.Persistence
 {
     public sealed class SchoolDbContext : DbContext
     {

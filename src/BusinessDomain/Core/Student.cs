@@ -20,6 +20,7 @@ namespace NetCoreManualDI.BusinessDomain.Core
         public void EnrollIn(Course course)
         {
             _enrollments.Add(new Enrollment(this, course));
+            RaiseEvent(new StudentEnrolledEvent(Name));
         }
 
         public void ChangeFavoriteCourse(Course newFavoriteCourse)

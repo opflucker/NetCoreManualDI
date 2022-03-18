@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace NetCoreManualDI.Persistence.Design.Migrations
+namespace NetCoreManualDI.Persistence.Migrations
 {
     public partial class Initial : Migration
     {

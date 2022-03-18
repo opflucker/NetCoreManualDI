@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace NetCoreManualDI.Persistence.Design
+namespace NetCoreManualDI.Persistence
 {
     public sealed class SchoolDbContextFactory : IDesignTimeDbContextFactory<SchoolDbContext>
     {

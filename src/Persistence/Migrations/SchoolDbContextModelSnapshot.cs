@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace NetCoreManualDI.Persistence.Design.Migrations
+namespace NetCoreManualDI.Persistence.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
     partial class SchoolDbContextModelSnapshot : ModelSnapshot

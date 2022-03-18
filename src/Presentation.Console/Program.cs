@@ -10,19 +10,20 @@ var connectionString = new ConfigurationBuilder()
     .GetConnectionString("DefaultConnection");
 
 // Use case: Initialize database
-//var schoolService = ApplicationDomainFactories.ForSchoolService(() => new SchoolContext(connectionString, true));
-//await schoolService.Initialize();
+var schoolService = ApplicationDomainFactories.ForSchoolService(() => new SchoolContext(connectionString, true));
+await schoolService.Initialize();
 
 // Use case: enroll student
 //var schoolService = ApplicationDomainFactories.ForSchoolService(() => new SchoolContext(connectionString, true));
-//await schoolService.EnrollStudent("Otto".ToStudentName(), "Math");
-//await schoolService.EnrollStudent("Otto".ToStudentName(), "Physics");
-//await schoolService.EnrollStudent("Otto".ToStudentName(), "History");
+await schoolService.EnrollStudent("Otto".ToStudentName(), "Math".ToCourseName());
+//await schoolService.EnrollStudent("Otto".ToStudentName(), "Physics".ToCourseName());
+//await schoolService.EnrollStudent("Otto".ToStudentName(), "History".ToCourseName());
+Console.WriteLine();
 
 // Use case: Read student
-using var schoolContext = new SchoolContext(connectionString, true);
-var student = await schoolContext.Students.GetByNameAsync("Otto".ToStudentName());
-Console.WriteLine(student);
+//using var schoolContext = new SchoolContext(connectionString, true);
+//var student = await schoolContext.Students.GetByNameAsync("Otto".ToStudentName());
+//Console.WriteLine(student);
 
 // Use case: use an untracked object to set a relation
 //Course? mathCourse;

@@ -10,7 +10,13 @@ namespace NetCoreManualDI.ApplicationDomain
         private static Func<ISchoolContext, IStudentsService> ForStudentsService
             => (context) => new StudentsService(context);
 
+        private static IBusinessDomainEventsDispatcher DefaultBusinessDomainEventsDispatcher 
+            = new BusinessDomainEventsDispatcher();
+
+        private static Func<Func<ISchoolContext>, Func<IApplicationContext>> ForApplicationContext
+            => (contextFactory) => () => new ApplicationContext(contextFactory, DefaultBusinessDomainEventsDispatcher);
+
         public static Func<Func<ISchoolContext>, ISchoolService> ForSchoolService
-            => (contextFactory) => new SchoolService(contextFactory, ForCoursesService, ForStudentsService);
+            => (contextFactory) => new SchoolService(ForApplicationContext(contextFactory), ForCoursesService, ForStudentsService);
     }
 }

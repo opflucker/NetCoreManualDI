@@ -1,5 +1,6 @@
-﻿using NetCoreManualDI.ApplicationDomain.Repositories;
-using NetCoreManualDI.Persistence.Design;
+﻿using Microsoft.EntityFrameworkCore;
+using NetCoreManualDI.ApplicationDomain.Repositories;
+using NetCoreManualDI.BusinessDomain.Commons;
 
 namespace NetCoreManualDI.Persistence
 {
@@ -23,6 +24,16 @@ namespace NetCoreManualDI.Persistence
             GC.SuppressFinalize(this);
         }
 
-        public Task SaveChangesAsync() => context.SaveChangesAsync();
+        public async Task<IReadOnlyList<RootAggregate>> SaveChangesAsync()
+        {
+            var savedList = context.ChangeTracker.Entries()
+                .Where(e => e.State != EntityState.Unchanged && e.Entity is RootAggregate)
+                .Select(e => e.Entity as RootAggregate)
+                .ToList();
+
+            await context.SaveChangesAsync();
+;
+            return savedList!;
+        }
     }
 }

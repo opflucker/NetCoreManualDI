@@ -1,4 +1,7 @@
 ﻿using NetCoreManualDI.ApplicationDomain.Repositories;
+using NetCoreManualDI.BusinessDomain.Commons;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace NetCoreManualDI.UnitTests.Fakes
@@ -18,9 +21,9 @@ namespace NetCoreManualDI.UnitTests.Fakes
         {
         }
 
-        public Task SaveChangesAsync()
+        public Task<IReadOnlyList<RootAggregate>> SaveChangesAsync()
         {
-            return Task.CompletedTask;
+            return Task.FromResult((IReadOnlyList<RootAggregate>)Array.Empty<RootAggregate>());
         }
     }
 }
