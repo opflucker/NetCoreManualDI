@@ -34,6 +34,8 @@ namespace NetCoreManualDI.WebApi
 
         public void Release(ControllerContext context, object controller)
         {
+            if (controller is IDisposable disposable)
+                disposable.Dispose();
         }
     }
 }

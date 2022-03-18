@@ -2,10 +2,10 @@
 
 namespace NetCoreManualDI.ApplicationDomain
 {
-    public interface IApplicationContext : IDisposable
+    public interface ISchoolContextWithEvents : IDisposable
     {
         ISchoolContext School { get; }
 
-        Task SaveChangesAsync();
+        Task SaveChangesAndDispatchEventsAsync();
     }
 }

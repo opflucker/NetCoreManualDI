@@ -7,17 +7,23 @@ namespace NetCoreManualDI.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class SchoolController : ControllerBase
+    public class SchoolController : ControllerBase, IDisposable
     {
         private readonly ILogger<SchoolController> logger;
-        private readonly Func<ISchoolService> schoolServiceFactory;
+        private readonly ISchoolService schoolService;
 
         public SchoolController(
             ILogger<SchoolController> logger,
             Func<ISchoolService> schoolServiceFactory)
         {
             this.logger = logger;
-            this.schoolServiceFactory = schoolServiceFactory;
+            schoolService = schoolServiceFactory();
+        }
+
+        public void Dispose()
+        {
+            schoolService.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         [HttpPost]
@@ -25,10 +31,7 @@ namespace NetCoreManualDI.WebApi.Controllers
         {
             logger.LogInformation("Calling EnrollStudent");
 
-            using (var someService = schoolServiceFactory())
-            {
-                await someService.EnrollStudent(studentName.ToStudentName(), courseName.ToCourseName());
-            }
+            await schoolService.EnrollStudent(studentName.ToStudentName(), courseName.ToCourseName());
 
             return Ok();
         }

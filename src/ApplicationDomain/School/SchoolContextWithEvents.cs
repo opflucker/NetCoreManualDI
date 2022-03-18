@@ -3,12 +3,12 @@ using NetCoreManualDI.ApplicationDomain.Repositories;
 
 namespace NetCoreManualDI.ApplicationDomain
 {
-    public class ApplicationContext : IApplicationContext
+    public class SchoolContextWithEvents : ISchoolContextWithEvents
     {
         private readonly ISchoolContext schoolContext;
         private readonly IEventsDispatcher eventsDispatcher;
 
-        public ApplicationContext(Func<ISchoolContext> schoolContext, IEventsDispatcher eventsDispatcher)
+        public SchoolContextWithEvents(Func<ISchoolContext> schoolContext, IEventsDispatcher eventsDispatcher)
         {
             this.schoolContext = schoolContext();
             this.eventsDispatcher = eventsDispatcher;
@@ -22,7 +22,7 @@ namespace NetCoreManualDI.ApplicationDomain
             GC.SuppressFinalize(this);
         }
 
-        public async Task SaveChangesAsync()
+        public async Task SaveChangesAndDispatchEventsAsync()
         {
             var savedAggregates = await schoolContext.SaveChangesAsync();
 
