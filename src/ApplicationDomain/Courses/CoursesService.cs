@@ -1,7 +1,7 @@
 ﻿using NetCoreManualDI.ApplicationDomain.Repositories;
-using NetCoreManualDI.BusinessDomain.Core;
+using NetCoreManualDI.BusinessDomain.Core.Courses;
 
-namespace NetCoreManualDI.ApplicationDomain
+namespace NetCoreManualDI.ApplicationDomain.Courses
 {
     internal sealed class CoursesService : ICoursesService
     {

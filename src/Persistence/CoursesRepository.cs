@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NetCoreManualDI.ApplicationDomain.Repositories;
 using NetCoreManualDI.BusinessDomain.Core;
+using NetCoreManualDI.BusinessDomain.Core.Courses;
 
 namespace NetCoreManualDI.Persistence
 {

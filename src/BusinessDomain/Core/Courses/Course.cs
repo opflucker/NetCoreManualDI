@@ -1,6 +1,6 @@
 ﻿using NetCoreManualDI.BusinessDomain.Commons;
 
-namespace NetCoreManualDI.BusinessDomain.Core
+namespace NetCoreManualDI.BusinessDomain.Core.Courses
 {
     public class Course : RootAggregate
     {

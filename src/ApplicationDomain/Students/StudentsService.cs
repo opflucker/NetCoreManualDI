@@ -1,7 +1,7 @@
 ﻿using NetCoreManualDI.ApplicationDomain.Repositories;
-using NetCoreManualDI.BusinessDomain.Core;
+using NetCoreManualDI.BusinessDomain.Core.Students;
 
-namespace NetCoreManualDI.ApplicationDomain
+namespace NetCoreManualDI.ApplicationDomain.Students
 {
     internal sealed class StudentsService : IStudentsService
     {

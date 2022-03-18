@@ -1,8 +1,8 @@
 ﻿using NetCoreManualDI.BusinessDomain.Commons;
 
-namespace NetCoreManualDI.ApplicationDomain
+namespace NetCoreManualDI.ApplicationDomain.Events
 {
-    internal class BusinessDomainEventsDispatcher : IBusinessDomainEventsDispatcher
+    internal class ConsoleEventsDispatcher : IEventsDispatcher
     {
         public Task DispatchAsync(IEvent @event)
         {

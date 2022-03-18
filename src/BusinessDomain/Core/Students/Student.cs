@@ -1,6 +1,7 @@
 ﻿using NetCoreManualDI.BusinessDomain.Commons;
+using NetCoreManualDI.BusinessDomain.Core.Courses;
 
-namespace NetCoreManualDI.BusinessDomain.Core
+namespace NetCoreManualDI.BusinessDomain.Core.Students
 {
     public sealed class Student : RootAggregate
     {

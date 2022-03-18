@@ -1,6 +1,8 @@
 using NetCoreManualDI.ApplicationDomain;
 using NetCoreManualDI.ApplicationDomain.Repositories;
-using NetCoreManualDI.BusinessDomain.Core;
+using NetCoreManualDI.ApplicationDomain.School;
+using NetCoreManualDI.BusinessDomain.Core.Courses;
+using NetCoreManualDI.BusinessDomain.Core.Students;
 using NetCoreManualDI.UnitTests.Fakes;
 using Xunit;
 
@@ -14,7 +16,7 @@ namespace NetCoreManualDI.UnitTests
         public SchoolServiceTests()
         {
             schoolContext = new SchoolContextFake();
-            schoolService = ApplicationDomainFactories.ForSchoolService(() => schoolContext);
+            schoolService = Factories.ForSchoolService(() => schoolContext);
         }
 
         [Fact]

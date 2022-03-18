@@ -1,6 +1,6 @@
-﻿using NetCoreManualDI.BusinessDomain.Core;
+﻿using NetCoreManualDI.BusinessDomain.Core.Students;
 
-namespace NetCoreManualDI.ApplicationDomain
+namespace NetCoreManualDI.ApplicationDomain.Students
 {
     public interface IStudentsService
     {

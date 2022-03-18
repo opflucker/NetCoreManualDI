@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using NetCoreManualDI.ApplicationDomain;
-using NetCoreManualDI.BusinessDomain.Core;
+using NetCoreManualDI.BusinessDomain.Core.Courses;
+using NetCoreManualDI.BusinessDomain.Core.Students;
 using NetCoreManualDI.Persistence;
 
 var connectionString = new ConfigurationBuilder()
@@ -10,7 +11,7 @@ var connectionString = new ConfigurationBuilder()
     .GetConnectionString("DefaultConnection");
 
 // Use case: Initialize database
-var schoolService = ApplicationDomainFactories.ForSchoolService(() => new SchoolContext(connectionString, true));
+var schoolService = Factories.ForSchoolService(() => new SchoolContext(connectionString, true));
 await schoolService.Initialize();
 
 // Use case: enroll student

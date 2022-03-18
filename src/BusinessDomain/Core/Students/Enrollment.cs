@@ -1,6 +1,8 @@
 ﻿using NetCoreManualDI.BusinessDomain.Commons;
+using NetCoreManualDI.BusinessDomain.Core.Courses;
+using NetCoreManualDI.BusinessDomain.Core.Students;
 
-namespace NetCoreManualDI.BusinessDomain.Core
+namespace NetCoreManualDI.BusinessDomain.Core.Students
 {
     public class Enrollment : Entity
     {

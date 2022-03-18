@@ -1,6 +1,7 @@
-﻿using NetCoreManualDI.BusinessDomain.Core;
+﻿using NetCoreManualDI.BusinessDomain.Core.Courses;
+using NetCoreManualDI.BusinessDomain.Core.Students;
 
-namespace NetCoreManualDI.ApplicationDomain
+namespace NetCoreManualDI.ApplicationDomain.School
 {
     public interface ISchoolService : IDisposable
     {

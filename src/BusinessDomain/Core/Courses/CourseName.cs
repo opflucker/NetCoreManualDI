@@ -1,4 +1,4 @@
-﻿namespace NetCoreManualDI.BusinessDomain.Core
+﻿namespace NetCoreManualDI.BusinessDomain.Core.Courses
 {
     public sealed record class CourseName(string Name) : NotNullOrWhiteSpaceText(Name);
 

@@ -1,6 +1,6 @@
-﻿using NetCoreManualDI.BusinessDomain.Core;
+﻿using NetCoreManualDI.BusinessDomain.Core.Courses;
 
-namespace NetCoreManualDI.ApplicationDomain
+namespace NetCoreManualDI.ApplicationDomain.Courses
 {
     public interface ICoursesService
     {

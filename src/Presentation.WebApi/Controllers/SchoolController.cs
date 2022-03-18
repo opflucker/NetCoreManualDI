@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using NetCoreManualDI.ApplicationDomain;
-using NetCoreManualDI.BusinessDomain.Core;
+using NetCoreManualDI.ApplicationDomain.School;
+using NetCoreManualDI.BusinessDomain.Core.Courses;
+using NetCoreManualDI.BusinessDomain.Core.Students;
 
 namespace NetCoreManualDI.WebApi.Controllers
 {
