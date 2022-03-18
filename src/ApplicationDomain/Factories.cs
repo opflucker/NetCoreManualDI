@@ -14,11 +14,10 @@ namespace NetCoreManualDI.ApplicationDomain
         private static Func<ISchoolContext, IStudentsService> ForStudentsService
             => (context) => new StudentsService(context);
 
-        private static IEventsDispatcher DefaultEventsDispatcher 
-            = new ConsoleEventsDispatcher();
+        private static readonly Lazy<IEventsDispatcher> DefaultEventsDispatcher = new();
 
         private static Func<Func<ISchoolContext>, Func<ISchoolContextWithEvents>> ForSchoolContextWithEvents
-            => (contextFactory) => () => new SchoolContextWithEvents(contextFactory, DefaultEventsDispatcher);
+            => (contextFactory) => () => new SchoolContextWithEvents(contextFactory, DefaultEventsDispatcher.Value);
 
         public static Func<Func<ISchoolContext>, ISchoolService> ForSchoolService
             => (contextFactory) => new SchoolService(ForSchoolContextWithEvents(contextFactory), ForCoursesService, ForStudentsService);
