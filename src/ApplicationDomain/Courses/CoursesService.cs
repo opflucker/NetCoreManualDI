@@ -5,16 +5,16 @@ namespace NetCoreManualDI.ApplicationDomain.Courses
 {
     internal sealed class CoursesService : ICoursesService
     {
-        private readonly ISchoolContext schoolContext;
+        private readonly ICoursesRepository courses;
 
-        public CoursesService(ISchoolContext schoolContext)
+        public CoursesService(ICoursesRepository courses)
         {
-            this.schoolContext = schoolContext;
+            this.courses = courses;
         }
 
         public Task<Course?> GetByNameAsync(CourseName name)
         {
-            return schoolContext.Courses.GetByNameAsync(name);
+            return courses.GetByNameAsync(name);
         }
     }
 }

@@ -14,12 +14,12 @@ namespace NetCoreManualDI.ApplicationDomain.School
 
         public SchoolService(
             Func<ISchoolContextWithEvents> schoolContextFactory,
-            Func<ISchoolContext, ICoursesService> coursesServiceFactory,
-            Func<ISchoolContext, IStudentsService> studentsServiceFactory)
+            Func<ICoursesRepository, ICoursesService> coursesServiceFactory,
+            Func<IStudentsRepository, IStudentsService> studentsServiceFactory)
         {
             schoolContext = schoolContextFactory();
-            coursesService = coursesServiceFactory(schoolContext.School);
-            studentsService = studentsServiceFactory(schoolContext.School);
+            coursesService = coursesServiceFactory(schoolContext.School.Courses);
+            studentsService = studentsServiceFactory(schoolContext.School.Students);
         }
 
         public void Dispose()

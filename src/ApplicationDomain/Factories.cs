@@ -8,11 +8,11 @@ namespace NetCoreManualDI.ApplicationDomain
 {
     public static class Factories
     {
-        private static Func<ISchoolContext, ICoursesService> ForCoursesService
-            => (context) => new CoursesService(context);
+        private static Func<ICoursesRepository, ICoursesService> ForCoursesService
+            => (repository) => new CoursesService(repository);
 
-        private static Func<ISchoolContext, IStudentsService> ForStudentsService
-            => (context) => new StudentsService(context);
+        private static Func<IStudentsRepository, IStudentsService> ForStudentsService
+            => (repository) => new StudentsService(repository);
 
         private static readonly Lazy<IEventsDispatcher> DefaultEventsDispatcher = new();
 
