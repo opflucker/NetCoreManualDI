@@ -19,7 +19,6 @@ await schoolService.Initialize();
 await schoolService.EnrollStudent("Otto".ToStudentName(), "Math".ToCourseName());
 //await schoolService.EnrollStudent("Otto".ToStudentName(), "Physics".ToCourseName());
 //await schoolService.EnrollStudent("Otto".ToStudentName(), "History".ToCourseName());
-Console.WriteLine();
 
 // Use case: Read student
 //using var schoolContext = new SchoolContext(connectionString, true);

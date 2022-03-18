@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NetCoreManualDI.ApplicationDomain.Repositories;
+﻿using NetCoreManualDI.ApplicationDomain.Repositories;
 using NetCoreManualDI.BusinessDomain.Commons;
 
 namespace NetCoreManualDI.Persistence
@@ -26,14 +25,14 @@ namespace NetCoreManualDI.Persistence
 
         public async Task<IReadOnlyList<RootAggregate>> SaveChangesAsync()
         {
-            var savedList = context.ChangeTracker.Entries()
-                .Where(e => e.State != EntityState.Unchanged && e.Entity is RootAggregate)
+            var savedAggregates = context.ChangeTracker.Entries()
+                .Where(e => e.Entity is RootAggregate)
                 .Select(e => e.Entity as RootAggregate)
                 .ToList();
 
             await context.SaveChangesAsync();
-;
-            return savedList!;
+
+            return savedAggregates!;
         }
     }
 }

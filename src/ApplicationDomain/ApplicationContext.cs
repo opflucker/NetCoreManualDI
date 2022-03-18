@@ -26,7 +26,7 @@ namespace NetCoreManualDI.ApplicationDomain
         {
             var savedAggregates = await schoolContext.SaveChangesAsync();
 
-            foreach (var aggregate in savedAggregates)
+            foreach (var aggregate in savedAggregates.Where(a => a.Events.Any()))
             {
                 foreach (var @event in aggregate.Events)
                 {
