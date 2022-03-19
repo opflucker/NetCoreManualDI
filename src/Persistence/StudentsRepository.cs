@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NetCoreManualDI.ApplicationDomain.Repositories;
-using NetCoreManualDI.BusinessDomain.Core;
+using NetCoreManualDI.ApplicationDomain.Students;
 using NetCoreManualDI.BusinessDomain.Core.Students;
 using NetCoreManualDI.Persistence.Design;
 

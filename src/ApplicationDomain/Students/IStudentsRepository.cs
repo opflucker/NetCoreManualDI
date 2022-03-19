@@ -1,6 +1,6 @@
 ﻿using NetCoreManualDI.BusinessDomain.Core.Students;
 
-namespace NetCoreManualDI.ApplicationDomain.Repositories
+namespace NetCoreManualDI.ApplicationDomain.Students
 {
     public interface IStudentsRepository
     {

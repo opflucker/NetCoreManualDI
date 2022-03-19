@@ -1,6 +1,6 @@
 ﻿using NetCoreManualDI.BusinessDomain.Core.Courses;
 
-namespace NetCoreManualDI.ApplicationDomain.Repositories
+namespace NetCoreManualDI.ApplicationDomain.Courses
 {
     public interface ICoursesRepository
     {

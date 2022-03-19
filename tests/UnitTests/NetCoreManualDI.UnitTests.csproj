@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\ApplicationDomain.Repositories\NetCoreManualDI.ApplicationDomain.Repositories.csproj" />
     <ProjectReference Include="..\..\src\ApplicationDomain\NetCoreManualDI.ApplicationDomain.csproj" />
   </ItemGroup>
 

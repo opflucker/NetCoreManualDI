@@ -1,17 +1,16 @@
 ﻿using NetCoreManualDI.ApplicationDomain.Events;
-using NetCoreManualDI.ApplicationDomain.Repositories;
 
-namespace NetCoreManualDI.ApplicationDomain
+namespace NetCoreManualDI.ApplicationDomain.School
 {
     public class SchoolContextWithEvents : ISchoolContextWithEvents
     {
         private readonly ISchoolContext schoolContext;
         private readonly IEventsDispatcher eventsDispatcher;
 
-        public SchoolContextWithEvents(Func<ISchoolContext> schoolContext, IEventsDispatcher eventsDispatcher)
+        public SchoolContextWithEvents(Func<ISchoolContext> schoolContextFactory, Func<IEventsDispatcher> eventsDispatcherFactory)
         {
-            this.schoolContext = schoolContext();
-            this.eventsDispatcher = eventsDispatcher;
+            schoolContext = schoolContextFactory();
+            eventsDispatcher = eventsDispatcherFactory();
         }
 
         public ISchoolContext School => schoolContext;

@@ -1,4 +1,6 @@
-﻿using NetCoreManualDI.ApplicationDomain.Repositories;
+﻿using NetCoreManualDI.ApplicationDomain.Courses;
+using NetCoreManualDI.ApplicationDomain.School;
+using NetCoreManualDI.ApplicationDomain.Students;
 using NetCoreManualDI.BusinessDomain.Commons;
 using System;
 using System.Collections.Generic;

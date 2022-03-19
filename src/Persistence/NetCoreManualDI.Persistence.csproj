@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ApplicationDomain.Repositories\NetCoreManualDI.ApplicationDomain.Repositories.csproj" />
+    <ProjectReference Include="..\ApplicationDomain\NetCoreManualDI.ApplicationDomain.csproj" />
     <ProjectReference Include="..\BusinessDomain\NetCoreManualDI.BusinessDomain.csproj" />
   </ItemGroup>
 

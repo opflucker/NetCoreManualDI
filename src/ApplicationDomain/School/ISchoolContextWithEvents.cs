@@ -1,6 +1,4 @@
-﻿using NetCoreManualDI.ApplicationDomain.Repositories;
-
-namespace NetCoreManualDI.ApplicationDomain
+﻿namespace NetCoreManualDI.ApplicationDomain.School
 {
     public interface ISchoolContextWithEvents : IDisposable
     {

@@ -1,4 +1,4 @@
-﻿using NetCoreManualDI.ApplicationDomain.Repositories;
+﻿using NetCoreManualDI.ApplicationDomain.Students;
 using NetCoreManualDI.BusinessDomain.Core.Students;
 using System;
 using System.Collections.Generic;

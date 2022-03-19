@@ -1,5 +1,5 @@
 using NetCoreManualDI.ApplicationDomain;
-using NetCoreManualDI.ApplicationDomain.Repositories;
+using NetCoreManualDI.ApplicationDomain.Events;
 using NetCoreManualDI.ApplicationDomain.School;
 using NetCoreManualDI.BusinessDomain.Core.Courses;
 using NetCoreManualDI.BusinessDomain.Core.Students;
@@ -11,12 +11,14 @@ namespace NetCoreManualDI.UnitTests
     public class SchoolServiceTests
     {
         ISchoolContext schoolContext;
+        IEventsDispatcher eventsDispatcher;
         ISchoolService schoolService;
 
         public SchoolServiceTests()
         {
             schoolContext = new SchoolContextFake();
-            schoolService = Factories.ForSchoolService(() => schoolContext);
+            eventsDispatcher = new EventsDispatcherFake();
+            schoolService = Factories.ForSchoolService(() => schoolContext, () => eventsDispatcher);
         }
 
         [Fact]

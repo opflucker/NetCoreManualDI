@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BusinessDomain\NetCoreManualDI.BusinessDomain.csproj" />
+    <ProjectReference Include="..\ApplicationDomain\NetCoreManualDI.ApplicationDomain.csproj" />
   </ItemGroup>
 
 </Project>

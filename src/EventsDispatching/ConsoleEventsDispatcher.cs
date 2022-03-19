@@ -1,6 +1,7 @@
-﻿using NetCoreManualDI.BusinessDomain.Commons;
+﻿using NetCoreManualDI.ApplicationDomain.Events;
+using NetCoreManualDI.BusinessDomain.Commons;
 
-namespace NetCoreManualDI.ApplicationDomain.Events
+namespace NetCoreManualDI.EventsDispatching
 {
     internal class ConsoleEventsDispatcher : IEventsDispatcher
     {

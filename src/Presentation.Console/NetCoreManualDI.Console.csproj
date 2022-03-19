@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ApplicationDomain\NetCoreManualDI.ApplicationDomain.csproj" />
+    <ProjectReference Include="..\EventsDispatching\NetCoreManualDI.EventsDispatching.csproj" />
     <ProjectReference Include="..\Persistence\NetCoreManualDI.Persistence.csproj" />
   </ItemGroup>
 

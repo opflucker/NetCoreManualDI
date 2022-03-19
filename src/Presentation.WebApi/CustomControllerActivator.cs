@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using NetCoreManualDI.ApplicationDomain;
 using NetCoreManualDI.ApplicationDomain.School;
 using NetCoreManualDI.Persistence;
 using NetCoreManualDI.WebApi.Controllers;
+using ApplicationDomainFactories = NetCoreManualDI.ApplicationDomain.Factories;
+using EventsDispatchingFactories = NetCoreManualDI.EventsDispatching.Factories;
 
 namespace NetCoreManualDI.WebApi
 {
@@ -19,7 +20,7 @@ namespace NetCoreManualDI.WebApi
             var configuration = serviceProvider.GetRequiredService<IConfiguration>();
             var connectionString = configuration.GetConnectionString("DefaultConnection");
             var schoolContextFactory = () => new SchoolContext(connectionString, true);
-            schoolServiceFactory = () => Factories.ForSchoolService(schoolContextFactory);
+            schoolServiceFactory = () => ApplicationDomainFactories.ForSchoolService(schoolContextFactory, EventsDispatchingFactories.ForEventsDispatcher);
         }
 
         public object Create(ControllerContext context)

@@ -1,5 +1,4 @@
-﻿using NetCoreManualDI.ApplicationDomain.Repositories;
-using NetCoreManualDI.BusinessDomain.Core.Courses;
+﻿using NetCoreManualDI.BusinessDomain.Core.Courses;
 
 namespace NetCoreManualDI.ApplicationDomain.Courses
 {
