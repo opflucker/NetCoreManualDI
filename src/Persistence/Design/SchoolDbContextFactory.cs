@@ -8,14 +8,14 @@ namespace NetCoreManualDI.Persistence.Design
     {
         public SchoolDbContext CreateDbContext(string[] args)
         {
-            string basePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory())!.FullName, "Presentation");
+            string basePath = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory())!.FullName, "Presentation.Console");
 
-            var configuration = new ConfigurationBuilder()
+            var connectionString = new ConfigurationBuilder()
                 .SetBasePath(basePath)
                 .AddJsonFile("appsettings.json")
-                .Build();
+                .Build()
+                .GetConnectionString("DefaultConnection");
 
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
             return new SchoolDbContext(connectionString, true);
         }
     }
