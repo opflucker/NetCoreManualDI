@@ -6,7 +6,7 @@ using NetCoreManualDI.Persistence.Design;
 
 namespace NetCoreManualDI.Persistence
 {
-    public sealed class SchoolContext : ISchoolContext
+    internal sealed class SchoolContext : ISchoolContext
     {
         private readonly SchoolDbContext context;
 

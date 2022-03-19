@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using NetCoreManualDI.BusinessDomain.Core.Courses;
 using NetCoreManualDI.BusinessDomain.Core.Students;
-using NetCoreManualDI.Persistence;
-using ApplicationDomainFactories = NetCoreManualDI.ApplicationDomain.Factories;
-using EventsDispatchingFactories = NetCoreManualDI.EventsDispatching.Factories;
 
 var connectionString = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -11,9 +8,11 @@ var connectionString = new ConfigurationBuilder()
     .Build()
     .GetConnectionString("DefaultConnection");
 
-var schoolContextFactory = () => new SchoolContext(connectionString, true);
+var schoolContextFactory = () => NetCoreManualDI.Persistence.Factories.ForSchoolContext(connectionString, true);
+var eventsDispatcherFactory = NetCoreManualDI.EventsDispatching.Factories.ForEventsDispatcher;
+var schoolServiceFactory = () => NetCoreManualDI.ApplicationDomain.Factories.ForSchoolService(schoolContextFactory, eventsDispatcherFactory);
 
-using (var schoolService = ApplicationDomainFactories.ForSchoolService(schoolContextFactory, EventsDispatchingFactories.ForEventsDispatcher))
+using (var schoolService = schoolServiceFactory())
 {
     await schoolService.Initialize();
     await schoolService.EnrollStudent("Otto".ToStudentName(), "Physics".ToCourseName());
