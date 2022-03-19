@@ -7,19 +7,17 @@ The key element is the injection of dependency factories (**d-factories**) when 
 ```C#
 public static class Factories
 {
-    private static Func<ICoursesRepository, ICoursesService> ForCoursesService
-        => (repository) => new CoursesService(repository);
+    private static ICoursesService ForCoursesService(ICoursesRepository repository)
+        => new CoursesService(repository);
 
-    private static Func<IStudentsRepository, IStudentsService> ForStudentsService
-        => (repository) => new StudentsService(repository);
+    private static IStudentsService ForStudentsService(IStudentsRepository repository) 
+        => new StudentsService(repository);
 
-    private static readonly Lazy<IEventsDispatcher> DefaultEventsDispatcher = new();
+    private static Func<ISchoolContextWithEvents> ForSchoolContextWithEvents(Func<ISchoolContext> contextFactory, Func<IEventsDispatcher> eventsDispatcherFactory)
+        => () => new SchoolContextWithEvents(contextFactory, eventsDispatcherFactory);
 
-    private static Func<Func<ISchoolContext>, Func<ISchoolContextWithEvents>> ForSchoolContextWithEvents
-        => (contextFactory) => () => new SchoolContextWithEvents(contextFactory, DefaultEventsDispatcher.Value);
-
-    public static Func<Func<ISchoolContext>, ISchoolService> ForSchoolService
-        => (contextFactory) => new SchoolService(ForSchoolContextWithEvents(contextFactory), ForCoursesService, ForStudentsService);
+    public static ISchoolService ForSchoolService(Func<ISchoolContext> contextFactory, Func<IEventsDispatcher> eventsDispatcherFactory)
+        => new SchoolService(ForSchoolContextWithEvents(contextFactory, eventsDispatcherFactory), ForCoursesService, ForStudentsService);
 }
 ```
 
@@ -57,7 +55,7 @@ In summary, if a class use a dependency, it receives an instance injected. If it
 Use d-factories in console is straighforward, as in project [NetCoreManualDI.Console](src/Presentation.Console) in file [Program.cs](src/Presentation.Console/Program.cs):
 
 ```C#
-var schoolService = Factories.ForSchoolService(() => new SchoolContext(connectionString, true));
+var schoolServiceFactory = () => NetCoreManualDI.ApplicationDomain.Factories.ForSchoolService(schoolContextFactory, eventsDispatcherFactory);
 ```
 
 Use d-factories in ASP.NET Core requires to replace default web controllers activation. Fortunatelly, this is simple. Project [NetCoreManualDI.WebApi](src/Presentation.WebApi) shows it in file [Program.cs](src/Presentation.WebApi/Program.cs):
