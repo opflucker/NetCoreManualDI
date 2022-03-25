@@ -22,7 +22,7 @@ namespace NetCoreManualDI.UnitTests
         }
 
         [Fact]
-        public void When_Enroll_Then_Student_Success()
+        public void When_Enroll_Student_Then_Success()
         {
             var course1 = new Course("Math".ToCourseName());
             schoolContext.Courses.Register(course1);
