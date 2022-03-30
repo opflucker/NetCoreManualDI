@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ApplicationDomain\NetCoreManualDI.ApplicationDomain.csproj" />
-    <ProjectReference Include="..\BusinessDomain\NetCoreManualDI.BusinessDomain.csproj" />
+    <ProjectReference Include="..\Application\NetCoreManualDI.Application.csproj" />
+    <ProjectReference Include="..\Domain\NetCoreManualDI.Domain.csproj" />
   </ItemGroup>
 
 </Project>

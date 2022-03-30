@@ -1,5 +1,5 @@
-﻿using NetCoreManualDI.ApplicationDomain.Courses;
-using NetCoreManualDI.BusinessDomain.Core.Courses;
+﻿using NetCoreManualDI.Application.Courses;
+using NetCoreManualDI.Domain.Core.Courses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,23 +9,33 @@ namespace NetCoreManualDI.UnitTests.Fakes
 {
     internal class CoursesRepositoryFake : ICoursesRepository
     {
-        private readonly Dictionary<Guid, Course> courses = new Dictionary<Guid, Course>();
+        private readonly Dictionary<string, Course> courses = new();
+
+        public Task<IReadOnlyList<Course>> GetAllAsync()
+        {
+            return Task.FromResult(courses.Values.ToList() as IReadOnlyList<Course>);
+        }
 
         public ValueTask<Course?> GetByIdAsync(Guid id)
         {
-            if (courses.TryGetValue(id, out Course? course))
-                return ValueTask.FromResult<Course?>(course);
-            return ValueTask.FromResult<Course?>(null);
+            throw new NotImplementedException();
         }
 
         public Task<Course?> GetByNameAsync(CourseName name)
         {
-            return Task.FromResult(courses.Values.FirstOrDefault(c => c.Name == name));
+            if (courses.TryGetValue(name.Name, out Course? course))
+                return Task.FromResult<Course?>(course);
+            return Task.FromResult<Course?>(null);
         }
 
         public void Register(Course course)
         {
-            courses.Add(course.Id, course);
+            courses.Add(course.Name.Name, course);
+        }
+
+        Task<Course?> ICoursesRepository.GetByIdAsync(Guid id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

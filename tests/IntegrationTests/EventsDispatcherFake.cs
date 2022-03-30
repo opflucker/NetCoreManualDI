@@ -1,13 +1,13 @@
 ﻿using NetCoreManualDI.Application.Events;
 using NetCoreManualDI.Domain.Commons;
+using System.Threading.Tasks;
 
-namespace NetCoreManualDI.EventsDispatching
+namespace NetCoreManualDI.IntegrationTests
 {
-    internal class ConsoleEventsDispatcher : IEventsDispatcher
+    internal class EventsDispatcherFake : IEventsDispatcher
     {
         public Task DispatchAsync(IEvent @event)
         {
-            Console.WriteLine($"Dispatched event: {@event}");
             return Task.CompletedTask;
         }
     }

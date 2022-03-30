@@ -1,7 +1,7 @@
-﻿using NetCoreManualDI.ApplicationDomain.Courses;
-using NetCoreManualDI.ApplicationDomain.School;
-using NetCoreManualDI.ApplicationDomain.Students;
-using NetCoreManualDI.BusinessDomain.Commons;
+﻿using NetCoreManualDI.Application.Courses;
+using NetCoreManualDI.Application.School.Context;
+using NetCoreManualDI.Application.Students;
+using NetCoreManualDI.Domain.Commons;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

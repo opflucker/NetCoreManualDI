@@ -1,10 +1,10 @@
-﻿using NetCoreManualDI.ApplicationDomain.Events;
+﻿using NetCoreManualDI.Application.Events;
 
 namespace NetCoreManualDI.EventsDispatching
 {
     public static class Factories
     {
-        public static IEventsDispatcher ForEventsDispatcher()
+        public static IEventsDispatcher CreateEventsDispatcher()
             => new ConsoleEventsDispatcher();
     }
 }

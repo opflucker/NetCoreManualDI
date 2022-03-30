@@ -1,10 +1,10 @@
-﻿using NetCoreManualDI.ApplicationDomain.School;
+﻿using NetCoreManualDI.Application.School.Context;
 
 namespace NetCoreManualDI.Persistence
 {
     public static class Factories
     {
-        public static ISchoolContext ForSchoolContext(string connectionString, bool useConsoleLogger)
+        public static ISchoolContext CreateSchoolContext(string connectionString, bool useConsoleLogger)
             => new SchoolContext(connectionString, useConsoleLogger);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NetCoreManualDI.ApplicationDomain.Students;
-using NetCoreManualDI.BusinessDomain.Core.Students;
+using NetCoreManualDI.Application.Students;
+using NetCoreManualDI.Domain.Core.Students;
 using NetCoreManualDI.Persistence.Design;
 
 namespace NetCoreManualDI.Persistence
@@ -12,6 +12,15 @@ namespace NetCoreManualDI.Persistence
         public StudentsRepository(SchoolDbContext context)
         {
             this.context = context;
+        }
+
+        public async Task<IReadOnlyList<Student>> GetAllAsync()
+        {
+            return await context.Students
+                .Include(s => s.FavoriteCourse)
+                .Include(s => s.Enrollments)
+                .ThenInclude(e => e.Course)
+                .ToListAsync();
         }
 
         public async Task<Student?> GetByIdAsync(Guid id)

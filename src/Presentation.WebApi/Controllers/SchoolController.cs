@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using NetCoreManualDI.ApplicationDomain.School;
-using NetCoreManualDI.BusinessDomain.Core.Courses;
-using NetCoreManualDI.BusinessDomain.Core.Students;
+using NetCoreManualDI.Application.School;
+using NetCoreManualDI.Application.School.Dtos;
 
 namespace NetCoreManualDI.WebApi.Controllers
 {
@@ -26,14 +25,50 @@ namespace NetCoreManualDI.WebApi.Controllers
             GC.SuppressFinalize(this);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> EnrollStudent(string studentName, string courseName)
+        [HttpGet("courses")]
+        public async Task<ActionResult> GetAllCourses()
         {
-            logger.LogInformation("Calling EnrollStudent");
+            var courses = await schoolService.GetAllCourses();
 
-            await schoolService.EnrollStudent(studentName.ToStudentName(), courseName.ToCourseName());
+            return Ok(courses);
+        }
 
-            return Ok();
+        [HttpPost("courses")]
+        public async Task<ActionResult> RegisterCourse([FromBody] RegisterCourseDto dto)
+        {
+            logger.LogInformation($"Registering {dto}...");
+
+            var courseDto = await schoolService.RegisterCourse(dto);
+
+            return Ok(courseDto);
+        }
+
+        [HttpGet("students")]
+        public async Task<ActionResult> GetAllStudents()
+        {
+            var students = await schoolService.GetAllStudents();
+
+            return Ok(students);
+        }
+
+        [HttpPost("students")]
+        public async Task<ActionResult> RegisterStudent([FromBody] RegisterStudentDto dto)
+        {
+            logger.LogInformation($"Registering {dto}...");
+
+            var studentDto = await schoolService.RegisterStudent(dto);
+
+            return Ok(studentDto);
+        }
+
+        [HttpPost("enrolls")]
+        public async Task<ActionResult> EnrollStudent([FromBody] EnrollStudentDto dto)
+        {
+            logger.LogInformation($"Enrolling {dto}...");
+
+            await schoolService.EnrollStudent(dto);
+
+            return NoContent();
         }
     }
 }

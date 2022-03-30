@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using NetCoreManualDI.ApplicationDomain.Courses;
-using NetCoreManualDI.BusinessDomain.Core.Courses;
+using NetCoreManualDI.Application.Courses;
+using NetCoreManualDI.Domain.Core.Courses;
 
 namespace NetCoreManualDI.Persistence
 {
@@ -13,9 +13,14 @@ namespace NetCoreManualDI.Persistence
             this.Courses = Courses;
         }
 
-        public ValueTask<Course?> GetByIdAsync(Guid id)
+        public async Task<IReadOnlyList<Course>> GetAllAsync()
         {
-            return Courses.FindAsync(id);
+            return await Courses.ToListAsync();
+        }
+
+        public async Task<Course?> GetByIdAsync(Guid id)
+        {
+            return await Courses.FindAsync(id);
         }
 
         public Task<Course?> GetByNameAsync(CourseName name)

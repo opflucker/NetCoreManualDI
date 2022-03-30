@@ -1,39 +1,39 @@
-﻿using NetCoreManualDI.ApplicationDomain.Courses;
-using NetCoreManualDI.ApplicationDomain.School;
-using NetCoreManualDI.ApplicationDomain.Students;
-using NetCoreManualDI.BusinessDomain.Commons;
+﻿using NetCoreManualDI.Application.Courses;
+using NetCoreManualDI.Application.School.Context;
+using NetCoreManualDI.Application.Students;
+using NetCoreManualDI.Domain.Commons;
 using NetCoreManualDI.Persistence.Design;
 
 namespace NetCoreManualDI.Persistence
 {
     internal sealed class SchoolContext : ISchoolContext
     {
-        private readonly SchoolDbContext context;
+        private readonly SchoolDbContext dbContext;
 
         public IStudentsRepository Students { get; }
         public ICoursesRepository Courses { get; }
 
         public SchoolContext(string connectionString, bool useConsoleLogger)
         {
-            context = new SchoolDbContext(connectionString, useConsoleLogger);
-            Students = new StudentsRepository(context);
-            Courses = new CoursesRepository(context.Courses);
+            dbContext = new SchoolDbContext(connectionString, useConsoleLogger);
+            Students = new StudentsRepository(dbContext);
+            Courses = new CoursesRepository(dbContext.Courses);
         }
 
         public void Dispose()
         {
-            context.Dispose();
+            dbContext.Dispose();
             GC.SuppressFinalize(this);
         }
 
         public async Task<IReadOnlyList<RootAggregate>> SaveChangesAsync()
         {
-            var savedAggregates = context.ChangeTracker.Entries()
+            var savedAggregates = dbContext.ChangeTracker.Entries()
                 .Where(e => e.Entity is RootAggregate)
                 .Select(e => e.Entity as RootAggregate)
                 .ToList();
 
-            await context.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
 
             return savedAggregates!;
         }

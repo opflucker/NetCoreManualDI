@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using NetCoreManualDI.BusinessDomain.Core.Courses;
-using NetCoreManualDI.BusinessDomain.Core.Students;
+using NetCoreManualDI.Domain.Core.Courses;
+using NetCoreManualDI.Domain.Core.Students;
 
 namespace NetCoreManualDI.Persistence.Design
 {

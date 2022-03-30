@@ -1,5 +1,5 @@
-﻿using NetCoreManualDI.ApplicationDomain.Students;
-using NetCoreManualDI.BusinessDomain.Core.Students;
+﻿using NetCoreManualDI.Application.Students;
+using NetCoreManualDI.Domain.Core.Students;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +10,11 @@ namespace NetCoreManualDI.UnitTests.Fakes
     internal class StudentsRepositoryFake : IStudentsRepository
     {
         private readonly Dictionary<Guid, Student> students = new Dictionary<Guid, Student>();
+
+        public Task<IReadOnlyList<Student>> GetAllAsync()
+        {
+            return Task.FromResult(students.Values.ToList() as IReadOnlyList<Student>);
+        }
 
         public Task<Student?> GetByIdAsync(Guid id)
         {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
-using NetCoreManualDI.BusinessDomain.Core.Courses;
-using NetCoreManualDI.BusinessDomain.Core.Students;
+using NetCoreManualDI.Application.School.Dtos;
+using NetCoreManualDI.Domain.Core.Students;
+using NetCoreManualDI.Persistence.Design;
 
 var connectionString = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -8,14 +9,25 @@ var connectionString = new ConfigurationBuilder()
     .Build()
     .GetConnectionString("DefaultConnection");
 
-var schoolContextFactory = () => NetCoreManualDI.Persistence.Factories.ForSchoolContext(connectionString, true);
-var eventsDispatcherFactory = NetCoreManualDI.EventsDispatching.Factories.ForEventsDispatcher;
-var schoolServiceFactory = () => NetCoreManualDI.ApplicationDomain.Factories.ForSchoolService(schoolContextFactory, eventsDispatcherFactory);
+using (var schoolDbContext = new SchoolDbContext(connectionString, true))
+{
+    await schoolDbContext.Database.EnsureDeletedAsync();
+    await schoolDbContext.Database.EnsureCreatedAsync();
+}
+
+var schoolContextFactory = () => NetCoreManualDI.Persistence.Factories.CreateSchoolContext(connectionString, true);
+var eventsDispatcherFactory = NetCoreManualDI.EventsDispatching.Factories.CreateEventsDispatcher;
+var schoolServiceFactory = () => NetCoreManualDI.Application.Factories.CreateSchoolService(schoolContextFactory, eventsDispatcherFactory);
 
 using (var schoolService = schoolServiceFactory())
 {
-    await schoolService.Initialize();
-    await schoolService.EnrollStudent("Otto".ToStudentName(), "Physics".ToCourseName());
+    var courseNames = new[] { "Math", "Physics", "History" };
+    foreach (var name in courseNames)
+        await schoolService.RegisterCourse(new RegisterCourseDto(name));
+
+    await schoolService.RegisterStudent(new RegisterStudentDto("Otto", courseNames.First()));
+
+    await schoolService.EnrollStudent(new EnrollStudentDto("Otto", "Physics"));
 }
 
 using (var schoolContext = schoolContextFactory())

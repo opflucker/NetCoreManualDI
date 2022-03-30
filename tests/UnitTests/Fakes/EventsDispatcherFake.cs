@@ -1,5 +1,5 @@
-﻿using NetCoreManualDI.ApplicationDomain.Events;
-using NetCoreManualDI.BusinessDomain.Commons;
+﻿using NetCoreManualDI.Application.Events;
+using NetCoreManualDI.Domain.Commons;
 using System.Threading.Tasks;
 
 namespace NetCoreManualDI.UnitTests.Fakes
