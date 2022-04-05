@@ -7,27 +7,32 @@ using Polly;
 using System;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace NetCoreManualDI.IntegrationTests
 {
-    internal class DbFixture
+    public class DbAndHttpFixture : IDisposable
     {
+        public HttpClient HttpClient { get; }
         public SchoolDbContext DbContext { get; }
 
-        public DbFixture()
+        public DbAndHttpFixture()
         {
-            DbContext = BuildDbContext().GetAwaiter().GetResult();
-        }
-
-        private static async Task<SchoolDbContext> BuildDbContext()
-        {
-            var connectionString = new ConfigurationBuilder()
+            var config = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
-                .Build()
-                .GetConnectionString("DefaultConnection");
+                .AddEnvironmentVariables()
+                .Build();
 
+            HttpClient = new HttpClient() { BaseAddress = new Uri(config["ApiBaseUrl"]) };
+
+            var connectionString = config.GetConnectionString("DefaultConnection");
+            DbContext = BuildDbContext(connectionString).GetAwaiter().GetResult();
+        }
+
+        private static async Task<SchoolDbContext> BuildDbContext(string connectionString)
+        {
             await EnsureCanConnectToDB(connectionString);
 
             var dbContext = new SchoolDbContext(connectionString, false);
@@ -66,6 +71,27 @@ namespace NetCoreManualDI.IntegrationTests
             dbContext.Students.Add(student);
 
             await dbContext.SaveChangesAsync();
+        }
+
+        private bool disposedValue;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    HttpClient?.Dispose();
+                    DbContext?.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

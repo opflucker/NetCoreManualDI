@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json")
+    .AddEnvironmentVariables()
     .Build();
 
 builder.Services
@@ -18,12 +19,10 @@ builder.Services
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger().UseSwaggerUI();
-}
-
-app.UseAuthorization();
+//}
 
 app.MapControllers();
 
