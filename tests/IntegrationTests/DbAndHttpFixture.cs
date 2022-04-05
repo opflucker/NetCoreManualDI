@@ -55,8 +55,8 @@ namespace NetCoreManualDI.IntegrationTests
                 .WaitAndRetryAsync(10, retryCount => TimeSpan.FromSeconds(2))
                 .ExecuteAsync(async () =>
                 {
-                    using (var sqlConnection = new SqlConnection(masterConnectionString))
-                        await sqlConnection.OpenAsync();
+                    using var sqlConnection = new SqlConnection(masterConnectionString);
+                    await sqlConnection.OpenAsync();
                 });
         }
 
